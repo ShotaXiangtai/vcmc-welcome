@@ -1,0 +1,17 @@
+name: VCMCWelcome
+version: 1.0.0
+main: jp.vcmc.welcome.WelcomePlugin
+api-version: '26.2'
+folia-supported: true
+description: 'Plugin feature'
+
+commands:
+  welcome:
+    description: Welcome
+    usage: /welcome
+    permission: vcmc.welcome.admin
+
+permissions:
+  vcmc.welcome.admin:
+    description: welcome
+    default: op
