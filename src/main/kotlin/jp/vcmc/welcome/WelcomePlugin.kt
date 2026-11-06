@@ -165,6 +165,7 @@ class WelcomePlugin : JavaPlugin() {
             "url-hover" to "messages.url-hover",
             "discord-warning" to "messages.discord-warning",
             "discord-note" to "messages.discord-note",
+            "menu-note" to "messages.menu-note",
             KEY_URL to "url",
             KEY_DELAY to "delay-ticks",
         )

@@ -1,5 +1,7 @@
 package jp.vcmc.welcome
 
+import net.kyori.adventure.text.minimessage.MiniMessage
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.configuration.file.YamlConfiguration
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -8,6 +10,29 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class WelcomeSettingsTest {
+    private fun plainText(miniMessage: String) =
+        PlainTextComponentSerializer.plainText().serialize(MiniMessage.miniMessage().deserialize(miniMessage))
+
+    @Test
+    fun `以前の設定ファイルでもメニューの案内を表示する`() {
+        val text = plainText(WelcomeSettings.from(YamlConfiguration()).menuNote)
+        assertEquals("[メニュー] メインサーバーでは /menu で、よく使うコマンドをボタンから実行できます", text)
+    }
+
+    @Test
+    fun `メニューの案内は config yml と既定値で同じ文面にする`() {
+        val bundled = javaClass.getResourceAsStream("/config.yml")!!.reader(Charsets.UTF_8).use {
+            YamlConfiguration.loadConfiguration(it)
+        }
+        assertEquals(WelcomeSettings.from(YamlConfiguration()).menuNote, WelcomeSettings.from(bundled).menuNote)
+    }
+
+    @Test
+    fun `メニューの案内は空文字にできる`() {
+        val config = YamlConfiguration().apply { set("messages.menu-note", "") }
+        assertEquals("", WelcomeSettings.from(config).menuNote)
+    }
+
     @Test
     fun `空の設定では既定値を使う`() {
         val settings = WelcomeSettings.from(YamlConfiguration())

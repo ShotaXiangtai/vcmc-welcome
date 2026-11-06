@@ -29,3 +29,5 @@ messages:
   url-hover: "クリックしてHPを開く"
   discord-warning: "<red><bold>【重要】<gold>Discordサーバーへの参加は <dark_red><u>必須</u></dark_red><gold> です！"
   discord-note: "<gray>※HP内に招待リンクがあります"
+  # 空文字にすると表示しません
+  menu-note: "<green><bold>[メニュー]</bold> <white>メインサーバーでは <yellow>/menu</yellow> で、よく使うコマンドをボタンから実行できます"

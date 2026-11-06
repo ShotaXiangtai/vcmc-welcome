@@ -15,6 +15,7 @@ data class WelcomeSettings(
     val urlHover: String,
     val discordWarning: String,
     val discordNote: String,
+    val menuNote: String,
 ) {
     companion object {
         const val DEFAULT_URL = "https://www.vcmc.jp/"
@@ -36,6 +37,11 @@ data class WelcomeSettings(
                 "<red><bold>【重要】<gold>Discordサーバーへの参加は <dark_red><u>必須</u></dark_red><gold> です！",
             ),
             discordNote = message(config, "discord-note", "<gray>※HP内に招待リンクがあります"),
+            menuNote = message(
+                config,
+                "menu-note",
+                "<green><bold>[メニュー]</bold> <white>メインサーバーでは <yellow>/menu</yellow> で、よく使うコマンドをボタンから実行できます",
+            ),
         )
 
         private fun message(config: ConfigurationSection, key: String, default: String): String =
