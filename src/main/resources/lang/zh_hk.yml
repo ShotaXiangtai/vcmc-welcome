@@ -1,0 +1,24 @@
+# VCMCWelcome：繁體中文（香港）
+separator: "<dark_gray><st>--------------------------------------------</st>"
+welcome: "<yellow><bold>歡迎你，<aqua><player></aqua><white>！"
+url-label: "<green><bold>[官方網站] <white>撳一下去睇："
+url-hover: "撳一下打開網站"
+discord-warning: "<red><bold>【重要】<gold>一定要<dark_red><u>加入</u></dark_red><gold> Discord 伺服器！"
+discord-note: "<gray>※ 邀請連結喺官方網站度"
+# 留空就唔會顯示
+menu-note: "<green><bold>[選單]</bold> <white>喺主伺服器，可以用 <yellow>/menu</yellow> 撳掣行常用指令"
+# 管理指令
+help-header: "<gold>==== VCMCWelcome 說明 ===="
+help-reload: "<white>/welcome reload <gray>- 重新載入設定"
+help-set: '<white>/welcome set \<鍵> \<值> <gray>- 改日文文字或者設定'
+help-get: '<white>/welcome get \<鍵> <gray>- 睇日文文字或者設定'
+help-keys: "<gray>可以用嘅鍵：<keys>"
+reloaded: "<green>重新載入咗設定。"
+invalid-key: "<red>個鍵無效：<white><name>"
+invalid-delay: "<red>delay 一定要係 1 或以上嘅整數（例如 20）"
+invalid-url: "<red>url 一定要用 http:// 或者 https:// 開頭"
+updated: "<green>更新咗 <bold><name></bold>。"
+new-value: "<gray>新嘅值：<white><value>"
+current-value: "<gold><name><gray> 而家嘅值：<white><value>"
+value-unset: "（未設定）"
+language-note: "<gray>改咗嘅係日文文字。其他語言請改 lang 資料夾入面嘅檔案，然後行 /welcome reload。"

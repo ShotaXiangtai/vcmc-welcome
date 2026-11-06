@@ -9,13 +9,6 @@ data class WelcomeSettings(
     val soundName: String,
     val soundVolume: Float,
     val soundPitch: Float,
-    val separator: String,
-    val welcome: String,
-    val urlLabel: String,
-    val urlHover: String,
-    val discordWarning: String,
-    val discordNote: String,
-    val menuNote: String,
 ) {
     companion object {
         const val DEFAULT_URL = "https://www.vcmc.jp/"
@@ -27,28 +20,7 @@ data class WelcomeSettings(
             soundName = config.getString("sound.name", DEFAULT_SOUND).orEmpty(),
             soundVolume = config.getDouble("sound.volume", 1.0).toFloat(),
             soundPitch = config.getDouble("sound.pitch", 1.0).toFloat(),
-            separator = message(config, "separator", "<dark_gray><st>--------------------------------------------</st>"),
-            welcome = message(config, "welcome", "<yellow><bold>ようこそ！<aqua><player></aqua><white> さん"),
-            urlLabel = message(config, "url-label", "<green><bold>[公式HP] <white>クリックしてアクセス:"),
-            urlHover = message(config, "url-hover", "クリックしてHPを開く"),
-            discordWarning = message(
-                config,
-                "discord-warning",
-                "<red><bold>【重要】<gold>Discordサーバーへの参加は <dark_red><u>必須</u></dark_red><gold> です！",
-            ),
-            discordNote = message(config, "discord-note", "<gray>※HP内に招待リンクがあります"),
-            menuNote = message(
-                config,
-                "menu-note",
-                "<green><bold>[メニュー]</bold> <white>メインサーバーでは <yellow>/menu</yellow> で、よく使うコマンドをボタンから実行できます",
-            ),
         )
-
-        private fun message(config: ConfigurationSection, key: String, default: String): String =
-            normalizePlaceholders(config.getString("messages.$key", default).orEmpty())
-
-        /** {player} でも <player> と同じように書ける。 */
-        fun normalizePlaceholders(template: String): String = template.replace("{player}", "<player>")
 
         /** クリックで開ける形式か。それ以外はクライアントが開かないので設定させない。 */
         fun isValidUrl(url: String): Boolean = url.startsWith("https://") || url.startsWith("http://")

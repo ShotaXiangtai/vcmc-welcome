@@ -8,16 +8,15 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.minimessage.MiniMessage
+import jp.vcmc.welcome.i18n.Language
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 
 @Suppress("UnstableApiUsage")
 class WelcomePlugin : JavaPlugin() {
 
-    val miniMessage: MiniMessage = MiniMessage.miniMessage()
+    lateinit var messages: Messages
+        private set
 
     @Volatile
     lateinit var settings: WelcomeSettings
@@ -28,6 +27,8 @@ class WelcomePlugin : JavaPlugin() {
     override fun onEnable() {
         saveDefaultConfig()
         settings = WelcomeSettings.from(config)
+        messages = Messages(this)
+        messages.reload()
         server.pluginManager.registerEvents(JoinListener(this), this)
         registerCommands()
         logger.info("VCMCWelcome enabled.")
@@ -87,33 +88,35 @@ class WelcomePlugin : JavaPlugin() {
         StringArgumentType.getString(context, ARG_KEY).lowercase()
 
     private fun sendHelp(sender: CommandSender) {
-        sender.sendMessage(Component.text("==== VCMCWelcome ヘルプ ====", NamedTextColor.GOLD))
-        sender.sendMessage(helpLine("/welcome reload", "設定を再読み込み"))
-        sender.sendMessage(helpLine("/welcome set <キー> <値>", "設定を変更"))
-        sender.sendMessage(helpLine("/welcome get <キー>", "設定値を確認"))
-        sender.sendMessage(Component.text("利用可能なキー: " + CONFIG_PATHS.keys.joinToString(", "), NamedTextColor.GRAY))
+        messages.send(sender, "help-header")
+        messages.send(sender, "help-reload")
+        messages.send(sender, "help-set")
+        messages.send(sender, "help-get")
+        sendAvailableKeys(sender)
     }
 
-    private fun helpLine(command: String, description: String): Component =
-        Component.text(command, NamedTextColor.WHITE).append(Component.text(" - $description", NamedTextColor.GRAY))
+    private fun sendAvailableKeys(sender: CommandSender) {
+        messages.send(sender, "help-keys", "keys" to CONFIG_PATHS.keys.joinToString(", "))
+    }
 
     private fun reload(sender: CommandSender) {
         synchronized(configLock) {
             reloadConfig()
             settings = WelcomeSettings.from(config)
         }
-        sender.sendMessage(Component.text("設定を再読み込みしました。", NamedTextColor.GREEN))
+        messages.reload()
+        messages.send(sender, "reloaded")
     }
 
     private fun set(sender: CommandSender, key: String, value: String) {
         val path = requirePath(sender, key) ?: return
         val converted: Any = when (key) {
             KEY_DELAY -> value.toIntOrNull()?.takeIf { it >= 1 } ?: run {
-                sender.sendMessage(Component.text("delay には 1 以上の整数を指定してください (例: 20)", NamedTextColor.RED))
+                messages.send(sender, "invalid-delay")
                 return
             }
             KEY_URL -> value.takeIf(WelcomeSettings::isValidUrl) ?: run {
-                sender.sendMessage(Component.text("url は http:// か https:// で始めてください", NamedTextColor.RED))
+                messages.send(sender, "invalid-url")
                 return
             }
             else -> value
@@ -126,26 +129,23 @@ class WelcomePlugin : JavaPlugin() {
         server.asyncScheduler.runNow(this) { _ ->
             synchronized(configLock) { saveConfig() }
         }
-        sender.sendMessage(Component.text("$key を更新しました。", NamedTextColor.GREEN))
-        // 値はタグを解釈せず、入力したとおりに見せる。
-        sender.sendMessage(Component.text("新しい値: ", NamedTextColor.GRAY).append(Component.text(value, NamedTextColor.WHITE)))
+        messages.send(sender, "updated", "name" to key)
+        messages.send(sender, "new-value", "value" to value)
+        if (key != KEY_DELAY && key != KEY_URL) messages.send(sender, "language-note")
     }
 
     private fun get(sender: CommandSender, key: String) {
         val path = requirePath(sender, key) ?: return
-        val value = synchronized(configLock) { config.get(path) }?.toString() ?: "(未設定)"
-        sender.sendMessage(
-            Component.text(key, NamedTextColor.GOLD)
-                .append(Component.text(" の現在の値: ", NamedTextColor.GRAY))
-                .append(Component.text(value, NamedTextColor.WHITE)),
-        )
+        val value = synchronized(configLock) { config.get(path) }?.toString()
+            ?: messages.raw(Language.of(sender), "value-unset")
+        messages.send(sender, "current-value", "name" to key, "value" to value)
     }
 
     private fun requirePath(sender: CommandSender, key: String): String? {
         val path = CONFIG_PATHS[key]
         if (path == null) {
-            sender.sendMessage(Component.text("無効なキーです: $key", NamedTextColor.RED))
-            sender.sendMessage(Component.text("利用可能なキー: " + CONFIG_PATHS.keys.joinToString(", "), NamedTextColor.GRAY))
+            messages.send(sender, "invalid-key", "name" to key)
+            sendAvailableKeys(sender)
         }
         return path
     }

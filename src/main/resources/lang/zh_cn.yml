@@ -1,0 +1,24 @@
+# VCMCWelcome：简体中文
+separator: "<dark_gray><st>--------------------------------------------</st>"
+welcome: "<yellow><bold>欢迎，<aqua><player></aqua><white>！"
+url-label: "<green><bold>[官方网站] <white>点击访问："
+url-hover: "点击打开网站"
+discord-warning: "<red><bold>【重要】<gold>必须<dark_red><u>加入</u></dark_red><gold> Discord 服务器！"
+discord-note: "<gray>※ 邀请链接在官方网站上"
+# 留空则不显示
+menu-note: "<green><bold>[菜单]</bold> <white>在主服务器上，可以用 <yellow>/menu</yellow> 通过按钮执行常用命令"
+# 管理命令
+help-header: "<gold>==== VCMCWelcome 帮助 ===="
+help-reload: "<white>/welcome reload <gray>- 重新加载设置"
+help-set: '<white>/welcome set \<键> \<值> <gray>- 更改日语文本或设置'
+help-get: '<white>/welcome get \<键> <gray>- 查看日语文本或设置'
+help-keys: "<gray>可用的键：<keys>"
+reloaded: "<green>已重新加载设置。"
+invalid-key: "<red>无效的键：<white><name>"
+invalid-delay: "<red>delay 必须是 1 以上的整数（例如 20）"
+invalid-url: "<red>url 必须以 http:// 或 https:// 开头"
+updated: "<green>已更新 <bold><name></bold>。"
+new-value: "<gray>新的值：<white><value>"
+current-value: "<gold><name><gray> 的当前值：<white><value>"
+value-unset: "（未设置）"
+language-note: "<gray>更改的是日语文本。其他语言请编辑 lang 文件夹中的文件，然后执行 /welcome reload。"

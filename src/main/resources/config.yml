@@ -17,7 +17,9 @@ sound:
   pitch: 1.0
 
 # ====================================================================================================
-# メッセージ設定
+# メッセージ設定（日本語）
+# ほかの言語の文面は lang フォルダにあります。en.yml: English、zh_cn.yml: 简体中文、zh_tw.yml: 繁體中文（台灣）、zh_hk.yml: 繁體中文（香港）
+# プレイヤーのクライアントの言語設定に合わせて自動で切り替わります。
 # MiniMessage 形式で記述します。
 # プレースホルダー:
 #   <player> ... プレイヤー名
@@ -31,3 +33,18 @@ messages:
   discord-note: "<gray>※HP内に招待リンクがあります"
   # 空文字にすると表示しません
   menu-note: "<green><bold>[メニュー]</bold> <white>メインサーバーでは <yellow>/menu</yellow> で、よく使うコマンドをボタンから実行できます"
+  # 管理コマンドの文面
+  help-header: "<gold>==== VCMCWelcome ヘルプ ===="
+  help-reload: "<white>/welcome reload <gray>- 設定を再読み込み"
+  help-set: '<white>/welcome set \<キー> \<値> <gray>- 日本語の文面や設定を変更'
+  help-get: '<white>/welcome get \<キー> <gray>- 日本語の文面や設定値を確認'
+  help-keys: "<gray>利用可能なキー: <keys>"
+  reloaded: "<green>設定を再読み込みしました。"
+  invalid-key: "<red>無効なキーです: <white><name>"
+  invalid-delay: "<red>delay には 1 以上の整数を指定してください (例: 20)"
+  invalid-url: "<red>url は http:// か https:// で始めてください"
+  updated: "<green><bold><name></bold> を更新しました。"
+  new-value: "<gray>新しい値: <white><value>"
+  current-value: "<gold><name><gray> の現在の値: <white><value>"
+  value-unset: "(未設定)"
+  language-note: "<gray>変更したのは日本語の文面です。ほかの言語は lang フォルダのファイルを編集して /welcome reload を実行してください。"
