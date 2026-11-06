@@ -1,0 +1,24 @@
+# VCMCWelcome: English
+separator: "<dark_gray><st>--------------------------------------------</st>"
+welcome: "<yellow><bold>Welcome, <aqua><player></aqua><white>!"
+url-label: "<green><bold>[Official site] <white>Click to visit:"
+url-hover: "Click to open the site"
+discord-warning: "<red><bold>[IMPORTANT] <gold>Joining our Discord server is <dark_red><u>required</u></dark_red><gold>!"
+discord-note: "<gray>* You can find the invite link on the site"
+# Leave empty to hide this line
+menu-note: "<green><bold>[Menu]</bold> <white>On the main server, use <yellow>/menu</yellow> to run common commands with buttons"
+# Admin commands
+help-header: "<gold>==== VCMCWelcome Help ===="
+help-reload: "<white>/welcome reload <gray>- Reload settings"
+help-set: '<white>/welcome set \<key> \<value> <gray>- Change the Japanese text or a setting'
+help-get: '<white>/welcome get \<key> <gray>- Show the Japanese text or a setting'
+help-keys: "<gray>Available keys: <keys>"
+reloaded: "<green>Settings reloaded."
+invalid-key: "<red>Invalid key: <white><name>"
+invalid-delay: "<red>delay must be an integer of 1 or more (e.g. 20)"
+invalid-url: "<red>url must start with http:// or https://"
+updated: "<green>Updated <bold><name></bold>."
+new-value: "<gray>New value: <white><value>"
+current-value: "<gray>Current value of <gold><name><gray>: <white><value>"
+value-unset: "(not set)"
+language-note: "<gray>This changed the Japanese text. For other languages, edit the files in the lang folder and run /welcome reload."

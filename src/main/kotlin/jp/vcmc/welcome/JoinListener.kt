@@ -1,5 +1,6 @@
 package jp.vcmc.welcome
 
+import jp.vcmc.welcome.i18n.Language
 import net.kyori.adventure.key.InvalidKeyException
 import net.kyori.adventure.key.Key
 import net.kyori.adventure.sound.Sound
@@ -8,7 +9,6 @@ import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -27,32 +27,33 @@ class JoinListener(private val plugin: WelcomePlugin) : Listener {
         val settings = plugin.settings
         playSound(player, settings)
 
-        val mm = plugin.miniMessage
-        val playerTag = Placeholder.component("player", Component.text(player.name))
+        val messages = plugin.messages
+        val language = Language.of(player)
+        fun text(key: String) = messages.text(language, key, "player" to player.name)
 
-        player.sendMessage(mm.deserialize(settings.separator, playerTag))
+        player.sendMessage(text("separator"))
         player.sendMessage(Component.empty())
-        player.sendMessage(mm.deserialize(settings.welcome, playerTag))
+        player.sendMessage(text("welcome"))
         player.sendMessage(Component.empty())
         if (settings.url.isNotBlank()) {
-            player.sendMessage(mm.deserialize(settings.urlLabel, playerTag))
+            player.sendMessage(text("url-label"))
             player.sendMessage(
                 Component.text(settings.url)
                     .color(NamedTextColor.AQUA)
                     .decorate(TextDecoration.UNDERLINED)
                     .clickEvent(ClickEvent.openUrl(settings.url))
-                    .hoverEvent(HoverEvent.showText(mm.deserialize(settings.urlHover, playerTag))),
+                    .hoverEvent(HoverEvent.showText(text("url-hover"))),
             )
             player.sendMessage(Component.empty())
         }
-        player.sendMessage(mm.deserialize(settings.discordWarning, playerTag))
-        player.sendMessage(mm.deserialize(settings.discordNote, playerTag))
-        if (settings.menuNote.isNotBlank()) {
+        player.sendMessage(text("discord-warning"))
+        player.sendMessage(text("discord-note"))
+        if (messages.raw(language, "menu-note").isNotBlank()) {
             player.sendMessage(Component.empty())
-            player.sendMessage(mm.deserialize(settings.menuNote, playerTag))
+            player.sendMessage(text("menu-note"))
         }
         player.sendMessage(Component.empty())
-        player.sendMessage(mm.deserialize(settings.separator, playerTag))
+        player.sendMessage(text("separator"))
     }
 
     private fun playSound(player: Player, settings: WelcomeSettings) {

@@ -24,9 +24,9 @@
 | コマンド | 説明 |
 |---|---|
 | `/welcome` | ヘルプを表示します |
-| `/welcome reload` | `config.yml` を再読み込みします |
-| `/welcome set <キー> <値>` | 設定を変更して保存します |
-| `/welcome get <キー>` | 現在の設定値を、タグも含めて入力したとおりに表示します |
+| `/welcome reload` | `config.yml` と `lang` フォルダを再読み込みします |
+| `/welcome set <キー> <値>` | 日本語の文面や設定を変更して保存します |
+| `/welcome get <キー>` | 日本語の文面や設定の現在の値を、タグも含めて入力したとおりに表示します |
 
 **設定可能なキー:** `welcome`, `separator`, `url-label`, `url-hover`, `discord-warning`, `discord-note`, `menu-note`, `url`, `delay`
 
@@ -69,11 +69,31 @@ messages:
   menu-note: "<green><bold>[メニュー]</bold> <white>メインサーバーでは <yellow>/menu</yellow> で、よく使うコマンドをボタンから実行できます"
 ```
 
+## 多言語対応
+
+プレイヤーのクライアントの言語設定に合わせて、メッセージを自動で切り替えます。ゲーム中に言語を変更すると、次のメッセージから反映されます。
+
+| クライアントの言語 | 表示する言語 | 文面の場所 |
+|---|---|---|
+| 日本語 | 日本語 | `config.yml` の `messages` |
+| English（各地域） | English | `lang/en.yml` |
+| 简体中文 | 简体中文 | `lang/zh_cn.yml` |
+| 繁體中文（台灣）、文言 | 繁體中文（台灣） | `lang/zh_tw.yml` |
+| 繁體中文（香港） | 繁體中文（香港） | `lang/zh_hk.yml` |
+| 上記以外 | English | `lang/en.yml` |
+
+繁體中文（香港）の文面は広東語で書いています。コンソールへのメッセージとログは日本語のままです。
+
+`lang` フォルダのファイルは初回起動時に作られます。編集して `/welcome reload` を実行すると反映されます。ファイルに無いキーは jar 内の既定の文面を使います。
+
+`/welcome set` と `/welcome get` が扱うのは日本語の文面です。ほかの言語の文面は `lang` フォルダのファイルを編集してください。
+
 ## コード構成
 
 - `WelcomePlugin.kt`: メインクラス。Brigadier でのコマンド登録と、設定の変更・保存を行います。
 - `JoinListener.kt`: 参加を検知して、プレイヤーのリージョンでメッセージとサウンドを送ります。
 - `WelcomeSettings.kt`: `config.yml` の内容。
+- `Messages.kt`, `i18n/`: 受け取る人の言語で文面を作ります。
 
 ## ビルド
 
