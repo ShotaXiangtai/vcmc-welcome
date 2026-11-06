@@ -13,6 +13,7 @@
 
 - **ウェルカムメッセージの自動送信**: サーバー参加時にメッセージを表示します。
 - **遅延表示**: 指定した時間（tick 単位）遅らせて表示できます。
+- **メニューの案内**: メインサーバーで `/menu` を使えることを案内します。以前の `config.yml` にキーが無くても既定の文面で表示します。
 - **サウンド再生**: メッセージの表示時にサウンドを再生します。`sound.name` を空にすると鳴らしません。
 - **リッチテキスト対応**: [MiniMessage](https://docs.advntr.dev/minimessage/format.html) でメッセージを装飾できます。
 - **プレースホルダー**: `<player>`（または `{player}`）がプレイヤー名に置き換わります。
@@ -27,7 +28,7 @@
 | `/welcome set <キー> <値>` | 設定を変更して保存します |
 | `/welcome get <キー>` | 現在の設定値を、タグも含めて入力したとおりに表示します |
 
-**設定可能なキー:** `welcome`, `separator`, `url-label`, `url-hover`, `discord-warning`, `discord-note`, `url`, `delay`
+**設定可能なキー:** `welcome`, `separator`, `url-label`, `url-hover`, `discord-warning`, `discord-note`, `menu-note`, `url`, `delay`
 
 `url` は `http://` か `https://` で始めてください。`delay` は 1 以上の整数です。
 
@@ -64,6 +65,8 @@ messages:
   url-hover: "クリックしてHPを開く"
   discord-warning: "<red><bold>【重要】<gold>Discordサーバーへの参加は <dark_red><u>必須</u></dark_red><gold> です！"
   discord-note: "<gray>※HP内に招待リンクがあります"
+  # メインサーバーの /menu の案内。空文字にすると表示しません
+  menu-note: "<green><bold>[メニュー]</bold> <white>メインサーバーでは <yellow>/menu</yellow> で、よく使うコマンドをボタンから実行できます"
 ```
 
 ## コード構成

@@ -47,6 +47,10 @@ class JoinListener(private val plugin: WelcomePlugin) : Listener {
         }
         player.sendMessage(mm.deserialize(settings.discordWarning, playerTag))
         player.sendMessage(mm.deserialize(settings.discordNote, playerTag))
+        if (settings.menuNote.isNotBlank()) {
+            player.sendMessage(Component.empty())
+            player.sendMessage(mm.deserialize(settings.menuNote, playerTag))
+        }
         player.sendMessage(Component.empty())
         player.sendMessage(mm.deserialize(settings.separator, playerTag))
     }
