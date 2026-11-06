@@ -1,17 +1,16 @@
 name: VCMCWelcome
-version: 1.0.0
+version: '${project.version}'
 main: jp.vcmc.welcome.WelcomePlugin
-api-version: '26.2'
+api-version: '26.3'
 folia-supported: true
-description: 'Plugin feature'
-
-commands:
-  welcome:
-    description: Welcome
-    usage: /welcome
-    permission: vcmc.welcome.admin
+description: 'Welcome message plugin for Folia'
 
 permissions:
   vcmc.welcome.admin:
-    description: welcome
+    description: '/welcome で設定を変更する'
     default: op
+  vcmcwelcome.admin:
+    description: 'vcmc.welcome.admin の別名'
+    default: op
+    children:
+      vcmc.welcome.admin: true
